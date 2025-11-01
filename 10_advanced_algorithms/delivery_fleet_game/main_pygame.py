@@ -184,6 +184,7 @@ class DeliveryFleetApp:
         self.autoplay_timer = 0.0
         self.autoplay_action: Optional[str] = None
         self.speed_button_keys = ['speed1', 'speed2', 'speed3']
+        self.auto_plan_deferred = False
 
         # Create UI
         self._create_ui_components()
@@ -192,6 +193,7 @@ class DeliveryFleetApp:
         self.planned_routes = []
         self.package_status = {}
         self.agent_metrics_preview = {}
+        self.render_routes = []
 
         # Start new game
         self.engine.new_game()
@@ -220,47 +222,54 @@ class DeliveryFleetApp:
 
         # FIXED LAYOUT - Everything fits within 1000px height
         SIDEBAR_START = 100  # Below title bar
+        self.sidebar_start = SIDEBAR_START
+        self.sidebar_right_start = SIDEBAR_START
+
+        left_panel_x = SIDEBAR_X + 10
+        left_panel_width = SIDEBAR_WIDTH - 20
+        right_panel_x = SIDEBAR_RIGHT_X + 10
+        right_panel_width = SECONDARY_SIDEBAR_WIDTH - 20
 
         # Panels - Carefully calculated to prevent overlaps
-        self.stats_panel = CollapsiblePanel(SIDEBAR_X + 10, SIDEBAR_START, SIDEBAR_WIDTH - 20, 200, "GAME STATUS")
-        self.mode_panel = Panel(SIDEBAR_X + 10, SIDEBAR_START + 190, SIDEBAR_WIDTH - 20, 85, "MODE")
-        self.agent_panel = CollapsiblePanel(SIDEBAR_X + 10, SIDEBAR_START + 285, SIDEBAR_WIDTH - 20, 180, "AGENTS")
-        self.custom_agent_panel = CollapsiblePanel(SIDEBAR_X + 10, SIDEBAR_START + 475, SIDEBAR_WIDTH - 20, 120, "CUSTOM AGENTS")
-        self.controls_panel = Panel(SIDEBAR_X + 10, SIDEBAR_START + 605, SIDEBAR_WIDTH - 20, 330, "CONTROLS")
+        self.stats_panel = CollapsiblePanel(left_panel_x, SIDEBAR_START, left_panel_width, 200, "GAME STATUS")
+        self.mode_panel = Panel(left_panel_x, SIDEBAR_START, left_panel_width, 85, "MODE")
+        self.agent_panel = CollapsiblePanel(left_panel_x, SIDEBAR_START, left_panel_width, 180, "AGENTS")
+        self.custom_agent_panel = CollapsiblePanel(right_panel_x, SIDEBAR_START, right_panel_width, 120, "CUSTOM AGENTS")
+        self.controls_panel = Panel(right_panel_x, SIDEBAR_START, right_panel_width, 330, "CONTROLS")
 
         # Warning message area - positioned below controls panel
-        self.warning_rect = pygame.Rect(SIDEBAR_X + 10, SIDEBAR_START + 955, SIDEBAR_WIDTH - 20, 80)
+        self.warning_rect = pygame.Rect(right_panel_x, SIDEBAR_START, right_panel_width, 80)
 
         # Stats - Organized in clear rows
-        self.stat_col1 = SIDEBAR_X + 25
-        stat_col_width = (SIDEBAR_WIDTH - 70) // 3
+        self.stat_col1 = left_panel_x + 15
+        stat_col_width = (left_panel_width - 70) // 3
         self.stat_col2 = self.stat_col1 + stat_col_width
         self.stat_col3 = self.stat_col2 + stat_col_width
         self.stats_row_offsets = (40, 95, 145)
         self.stats_divider_offsets = (85, 140)
 
         # Row 1: Day, Balance, Popularity
-        self.day_stat = StatDisplay(self.stat_col1, SIDEBAR_START + self.stats_row_offsets[0], "Day:", "1")
-        self.balance_stat = StatDisplay(self.stat_col2, SIDEBAR_START + self.stats_row_offsets[0], "Balance:", "$100K")
-        self.popularity_stat = StatDisplay(self.stat_col3, SIDEBAR_START + self.stats_row_offsets[0], "Popularity:", "300")
+        self.day_stat = StatDisplay(self.stat_col1, self.stats_panel.rect.y + self.stats_row_offsets[0], "Day:", "1")
+        self.balance_stat = StatDisplay(self.stat_col2, self.stats_panel.rect.y + self.stats_row_offsets[0], "Balance:", "$100K")
+        self.popularity_stat = StatDisplay(self.stat_col3, self.stats_panel.rect.y + self.stats_row_offsets[0], "Popularity:", "300")
 
         # Row 2: Fleet and Packages
-        self.fleet_stat = StatDisplay(self.stat_col1, SIDEBAR_START + self.stats_row_offsets[1], "Fleet:", "2 veh")
-        self.packages_stat = StatDisplay(self.stat_col2, SIDEBAR_START + self.stats_row_offsets[1], "Pending:", "0")
-        self.capacity_stat = StatDisplay(self.stat_col3, SIDEBAR_START + self.stats_row_offsets[1], "Capacity:", "0/0")
+        self.fleet_stat = StatDisplay(self.stat_col1, self.stats_panel.rect.y + self.stats_row_offsets[1], "Fleet:", "2 veh")
+        self.packages_stat = StatDisplay(self.stat_col2, self.stats_panel.rect.y + self.stats_row_offsets[1], "Pending:", "0")
+        self.capacity_stat = StatDisplay(self.stat_col3, self.stats_panel.rect.y + self.stats_row_offsets[1], "Capacity:", "0/0")
 
         # Row 3: Planned route metrics (visible when routes are planned)
-        self.planned_cost_stat = StatDisplay(self.stat_col1, SIDEBAR_START + self.stats_row_offsets[2], "Cost:", "$0")
-        self.planned_revenue_stat = StatDisplay(self.stat_col2, SIDEBAR_START + self.stats_row_offsets[2], "Revenue:", "$0")
-        self.planned_profit_stat = StatDisplay(self.stat_col3, SIDEBAR_START + self.stats_row_offsets[2], "Profit:", "$0")
+        self.planned_cost_stat = StatDisplay(self.stat_col1, self.stats_panel.rect.y + self.stats_row_offsets[2], "Cost:", "$0")
+        self.planned_revenue_stat = StatDisplay(self.stat_col2, self.stats_panel.rect.y + self.stats_row_offsets[2], "Revenue:", "$0")
+        self.planned_profit_stat = StatDisplay(self.stat_col3, self.stats_panel.rect.y + self.stats_row_offsets[2], "Profit:", "$0")
 
         # Store planned metrics
         self.planned_metrics = None
 
         # Mode toggle buttons - positioned in MODE panel
-        mode_btn_x = SIDEBAR_X + 25
-        mode_btn_y = SIDEBAR_START + 230
-        mode_btn_width = (SIDEBAR_WIDTH - 60) // 2
+        mode_btn_x = self.mode_panel.rect.x + 15
+        mode_btn_y = self.mode_panel.rect.y + 40
+        mode_btn_width = (self.mode_panel.rect.width - 40) // 2
         self.mode_auto_btn = Button(mode_btn_x, mode_btn_y, mode_btn_width, 35, "AUTO", self.on_mode_auto)
         self.mode_manual_btn = Button(mode_btn_x + mode_btn_width + 10, mode_btn_y, mode_btn_width, 35, "MANUAL", self.on_mode_manual)
         self._mode_button_offsets = {
@@ -271,8 +280,9 @@ class DeliveryFleetApp:
         }
 
         # Agent radio buttons - positioned in AGENTS panel
-        self.agent_radio_x = SIDEBAR_X + 35
-        radio_y = SIDEBAR_START + 325
+        self.agent_list_top_offset = self.agent_panel.header_height + 10
+        self.agent_radio_x = self.agent_panel.rect.x + 25
+        radio_y = self.agent_panel.rect.y + self.agent_list_top_offset
         self.agent_radio_spacing = 35
         self.agent_radios = [
             RadioButton(self.agent_radio_x, radio_y, "Greedy", "agent", "greedy"),
@@ -282,8 +292,9 @@ class DeliveryFleetApp:
         ]
         self.agent_radios[0].selected = True
 
-        self.custom_radio_x = SIDEBAR_X + 35
-        custom_radio_y = SIDEBAR_START + 515
+        self.custom_agent_list_top_offset = self.custom_agent_panel.header_height + 10
+        self.custom_radio_x = self.custom_agent_panel.rect.x + 25
+        custom_radio_y = self.custom_agent_panel.rect.y + self.custom_agent_list_top_offset
         self.custom_radio_spacing = 35
         self.custom_agent_radios = [
             RadioButton(self.custom_radio_x, custom_radio_y, "Agent R", "agent", "agent_r"),
@@ -297,9 +308,11 @@ class DeliveryFleetApp:
         self._ensure_valid_agent_selection()
 
         # Control buttons - positioned in CONTROLS panel
-        btn_x = SIDEBAR_X + 25
-        btn_y = SIDEBAR_START + 625
-        btn_width = SIDEBAR_WIDTH - 50
+        panel_inner_x = self.controls_panel.rect.x + 15
+        panel_inner_y = self.controls_panel.rect.y + 55  # Leave space for panel title
+        btn_x = panel_inner_x
+        btn_y = panel_inner_y
+        btn_width = self.controls_panel.rect.width - 30
         btn_small_width = (btn_width - 10) // 2
         btn_height = 35
         btn_spacing = 38
@@ -344,14 +357,21 @@ class DeliveryFleetApp:
         return panel.rect.height
 
     def _reflow_sidebar_layout(self) -> None:
-        y = getattr(self, "sidebar_start", 100)
+        y_left = getattr(self, "sidebar_start", 100)
+        y_right = getattr(self, "sidebar_right_start", 100)
         gap = 10
 
-        for panel in (self.stats_panel, self.mode_panel, self.agent_panel, self.custom_agent_panel, self.controls_panel):
-            panel.rect.y = y
-            y += self._panel_effective_height(panel) + gap
+        for panel in (self.stats_panel, self.mode_panel, self.agent_panel):
+            panel.rect.y = y_left
+            y_left += self._panel_effective_height(panel) + gap
+
+        for panel in (self.custom_agent_panel, self.controls_panel):
+            panel.rect.y = y_right
+            y_right += self._panel_effective_height(panel) + gap
 
         # Reposition warning area beneath controls
+        self.warning_rect.x = self.controls_panel.rect.x
+        self.warning_rect.width = self.controls_panel.rect.width
         self.warning_rect.y = self.controls_panel.rect.y + self.controls_panel.rect.height + 20
 
         # Update stat display positions
@@ -367,11 +387,11 @@ class DeliveryFleetApp:
             stat.y = row3
 
         # Update agent radio positions
-        agent_base = self.agent_panel.rect.y + 40
+        agent_base = self.agent_panel.rect.y + self.agent_list_top_offset
         for idx, radio in enumerate(self.agent_radios):
             radio.set_position(self.agent_radio_x, agent_base + idx * self.agent_radio_spacing)
 
-        custom_base = self.custom_agent_panel.rect.y + 40
+        custom_base = self.custom_agent_panel.rect.y + self.custom_agent_list_top_offset
         for idx, radio in enumerate(self.custom_agent_radios):
             radio.set_position(self.custom_radio_x, custom_base + idx * self.custom_radio_spacing)
 
@@ -439,6 +459,9 @@ class DeliveryFleetApp:
         print("\n[UI] Starting day...")
         self.engine.start_day()
 
+        self.render_routes = []
+        self.auto_plan_deferred = False
+
         if not self.engine.game_state.packages_pending:
             self.show_warning("No packages for this day!", Colors.TEXT_ACCENT)
             return
@@ -449,11 +472,30 @@ class DeliveryFleetApp:
         fleet_capacity = sum(v.vehicle_type.capacity_m3 for v in self.engine.game_state.fleet)
 
         if fleet_capacity <= 0 or total_volume > fleet_capacity:
+            if self.mode == "AUTO":
+                self.auto_plan_deferred = True
             self.show_day_summary(total_volume, fleet_capacity)
         else:
             if self.mode == "AUTO":
-                self.auto_plan_routes(show_feedback=True)
+                if self.autoplay_enabled:
+                    self.auto_plan_routes(show_feedback=True)
+                else:
+                    total_volume = sum(pkg.volume_m3 for pkg in self.engine.game_state.packages_pending)
+                    fleet_capacity = sum(v.vehicle_type.capacity_m3 for v in self.engine.game_state.fleet)
+                    if fleet_capacity <= 0 or total_volume > fleet_capacity:
+                        self.auto_plan_deferred = True
+                        self.show_day_summary(total_volume, fleet_capacity)
+                    else:
+                        self.auto_plan_deferred = True
+                        self.show_day_preview(total_volume, fleet_capacity)
             else:
+                if not self.autoplay_enabled:
+                    total_volume = sum(pkg.volume_m3 for pkg in self.engine.game_state.packages_pending)
+                    fleet_capacity = sum(v.vehicle_type.capacity_m3 for v in self.engine.game_state.fleet)
+                    if fleet_capacity <= 0 or total_volume > fleet_capacity:
+                        self.show_day_summary(total_volume, fleet_capacity)
+                    else:
+                        self.show_day_preview(total_volume, fleet_capacity)
                 self.show_warning("Manual mode: build routes then execute.", Colors.TEXT_ACCENT)
 
         self.update_agent_previews()
@@ -526,6 +568,7 @@ class DeliveryFleetApp:
 
     def auto_plan_routes(self, show_feedback: bool = True):
         """Plan routes using the selected agent in AUTO mode."""
+        self.auto_plan_deferred = False
         if not self.engine.game_state or not self.engine.game_state.packages_pending:
             if show_feedback:
                 self.show_warning("No packages available to plan!", Colors.TEXT_ACCENT)
@@ -544,6 +587,7 @@ class DeliveryFleetApp:
         metrics = self._simulate_agent_metrics(agent_name)
         if metrics and metrics.get('routes'):
             self.planned_routes = metrics['routes']
+            self.render_routes = list(self.planned_routes)
             self.planned_metrics = metrics
             self.engine.apply_agent_solution(agent_name)
             self.buttons['execute'].enabled = True
@@ -558,9 +602,20 @@ class DeliveryFleetApp:
             self.planned_metrics = None
             self.engine.game_state.set_routes([])
             self.buttons['execute'].enabled = False
+            self.render_routes = []
             self._update_planned_metrics_display()
             if show_feedback:
                 self.show_warning("No valid routes found!", Colors.PROFIT_NEGATIVE)
+
+    def _maybe_execute_deferred_auto_plan(self, show_feedback: bool = True) -> None:
+        """Run deferred auto-planning once blocking modals are closed."""
+        if not self.auto_plan_deferred:
+            return
+        if self.mode != "AUTO":
+            self.auto_plan_deferred = False
+            return
+        self.auto_plan_deferred = False
+        self.auto_plan_routes(show_feedback=show_feedback)
 
     def toggle_autoplay(self):
         """Toggle automatic day progression."""
@@ -700,7 +755,16 @@ class DeliveryFleetApp:
         modal_btn_y = self.day_summary_modal.y + 480
         buttons = [
             Button(modal_btn_x, modal_btn_y, 220, 40, "Buy Vehicles", lambda: self.close_day_summary_and_buy(total_volume, fleet_capacity)),
-            Button(modal_btn_x + 240, modal_btn_y, 180, 40, "Continue", lambda: self.close_day_summary_with_warning(total_volume, fleet_capacity)),
+            Button(
+                modal_btn_x + 240,
+                modal_btn_y,
+                180,
+                40,
+                "Continue",
+                lambda: self.close_day_summary_with_warning(total_volume, fleet_capacity)
+                if self.autoplay_enabled
+                else self.close_day_summary_manual(total_volume, fleet_capacity),
+            ),
         ]
 
         self.day_summary_modal.show(content, buttons)
@@ -714,6 +778,23 @@ class DeliveryFleetApp:
         """Close day summary and show capacity warning."""
         self.day_summary_modal.hide()
         self.show_capacity_warning(needed, available)
+
+    def close_day_summary_manual(self, needed: float, available: float):
+        """Close day summary in manual flow and show guidance."""
+        self.day_summary_modal.hide()
+        self.update_agent_previews()
+        if self.mode == "MANUAL":
+            self.buttons['execute'].enabled = True
+        shortage = needed - available
+        if shortage > 0:
+            message = (
+                f"Manual planning: shortage {shortage:.1f}m³. "
+                "Plan carefully or assign fewer packages."
+            )
+            self.show_warning(message, Colors.TEXT_ACCENT)
+        else:
+            self.show_warning("Manual planning: review packages and build routes.", Colors.TEXT_ACCENT)
+        self._maybe_execute_deferred_auto_plan(show_feedback=True)
 
     def show_capacity_warning(self, needed: float, available: float):
         """Show warning when capacity is insufficient."""
@@ -752,6 +833,33 @@ class DeliveryFleetApp:
         ]
 
         self.capacity_warning_modal.show(content, buttons)
+    def show_day_preview(self, total_volume: float, fleet_capacity: float):
+        """Preview upcoming day when capacity is sufficient."""
+        state = self.engine.game_state
+        utilization_pct = (total_volume / fleet_capacity * 100) if fleet_capacity > 0 else 0
+
+        content = [
+            (f"Day {state.current_day}: daily preview", Colors.TEXT_ACCENT),
+            ("", Colors.TEXT_PRIMARY),
+            (f"Packages volume: {total_volume:.1f} m³", Colors.TEXT_PRIMARY),
+            (f"Fleet capacity: {fleet_capacity:.1f} m³", Colors.TEXT_PRIMARY),
+            (f"Utilization: {utilization_pct:.0f}% of capacity", Colors.TEXT_SECONDARY),
+            ("", Colors.TEXT_PRIMARY),
+            ("Plan routes manually or run an agent.", Colors.TEXT_ACCENT),
+        ]
+
+        modal_btn_x = self.day_summary_modal.x + 160
+        modal_btn_y = self.day_summary_modal.y + 480
+        buttons = [
+            Button(modal_btn_x, modal_btn_y, 220, 40, "Start Planning", lambda: self._handle_day_preview_continue()),
+        ]
+
+        self.day_summary_modal.show(content, buttons)
+
+    def _handle_day_preview_continue(self):
+        """Close day preview and trigger deferred auto-planning if required."""
+        self.day_summary_modal.hide()
+        self._maybe_execute_deferred_auto_plan(show_feedback=True)
 
     def close_modal_and_buy(self):
         """Close modal and open buy vehicle."""
@@ -767,6 +875,7 @@ class DeliveryFleetApp:
         )
         if self.mode == "MANUAL":
             self.buttons['execute'].enabled = True
+        self._maybe_execute_deferred_auto_plan(show_feedback=True)
 
     def on_buy_vehicle(self):
         """Show vehicle purchase modal."""
@@ -815,13 +924,24 @@ class DeliveryFleetApp:
 
         # Cancel button at bottom with spacing
         cancel_btn_y = modal_y + self.vehicle_modal.height - 60
-        cancel_btn = Button(modal_x + (self.vehicle_modal.width - 200) // 2, cancel_btn_y,
-                          200, 40, "Cancel", lambda: self.vehicle_modal.hide())
+        cancel_btn = Button(
+            modal_x + (self.vehicle_modal.width - 200) // 2,
+            cancel_btn_y,
+            200,
+            40,
+            "Cancel",
+            lambda: self._cancel_vehicle_purchase()
+        )
         buttons.append(cancel_btn)
 
         # Pass balance as extra data
         extra_data = {'balance': self.engine.game_state.balance}
         self.vehicle_modal.show(content, buttons, extra_data)
+
+    def _cancel_vehicle_purchase(self):
+        """Handle canceling the vehicle modal and resume auto-planning if queued."""
+        self.vehicle_modal.hide()
+        self._maybe_execute_deferred_auto_plan(show_feedback=False)
 
     def purchase_vehicle(self, vehicle_type_name: str):
         """Purchase a vehicle."""
@@ -858,6 +978,8 @@ class DeliveryFleetApp:
                     return
 
         print("\n[UI] Executing day...")
+        if self.planned_routes:
+            self.render_routes = list(self.planned_routes)
         self.engine.execute_day(self.selected_agent)
 
         for pkg in self.engine.game_state.packages_delivered:
@@ -1226,12 +1348,15 @@ class DeliveryFleetApp:
                     # Close modals first, then quit
                     if self.vehicle_modal.visible:
                         self.vehicle_modal.hide()
+                        self._maybe_execute_deferred_auto_plan(show_feedback=False)
                     elif self.capacity_warning_modal.visible:
                         self.capacity_warning_modal.hide()
+                        self._maybe_execute_deferred_auto_plan(show_feedback=True)
                     elif self.marketing_modal.visible:
                         self.marketing_modal.hide()
                     elif self.day_summary_modal.visible:
                         self.day_summary_modal.hide()
+                        self._maybe_execute_deferred_auto_plan(show_feedback=True)
                     elif self.comparison_modal.visible:
                         self.comparison_modal.hide()
                     else:
@@ -1438,8 +1563,9 @@ class DeliveryFleetApp:
                 status = self.package_status.get(pkg.id, "pending")
                 self.map_renderer.render_package(pkg, status)
 
-        if self.planned_routes:
-            for i, route in enumerate(self.planned_routes):
+        routes_to_draw = self.planned_routes if self.planned_routes else self.render_routes
+        if routes_to_draw:
+            for i, route in enumerate(routes_to_draw):
                 # Assign distinct color to each route
                 route_color = Colors.ROUTE_COLORS[i % len(Colors.ROUTE_COLORS)]
                 self.map_renderer.render_route(route, color=route_color, style="solid")
@@ -1563,8 +1689,8 @@ class DeliveryFleetApp:
 
             divider_y = self.stats_panel.rect.y + 85
             pygame.draw.line(self.screen, Colors.BORDER_LIGHT,
-                            (SIDEBAR_X + 25, divider_y),
-                            (SIDEBAR_X + SIDEBAR_WIDTH - 25, divider_y), 1)
+                            (self.stats_panel.rect.x + 15, divider_y),
+                            (self.stats_panel.rect.x + self.stats_panel.rect.width - 15, divider_y), 1)
 
             self.fleet_stat.render(self.screen)
             self.packages_stat.render(self.screen)
@@ -1572,8 +1698,8 @@ class DeliveryFleetApp:
 
             divider_y2 = self.stats_panel.rect.y + 140
             pygame.draw.line(self.screen, Colors.BORDER_LIGHT,
-                            (SIDEBAR_X + 25, divider_y2),
-                            (SIDEBAR_X + SIDEBAR_WIDTH - 25, divider_y2), 1)
+                            (self.stats_panel.rect.x + 15, divider_y2),
+                            (self.stats_panel.rect.x + self.stats_panel.rect.width - 15, divider_y2), 1)
 
             self.planned_cost_stat.render(self.screen)
             self.planned_revenue_stat.render(self.screen)
