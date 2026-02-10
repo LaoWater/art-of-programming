@@ -682,7 +682,7 @@ def visualize_learned_features(model, X_test):
     if len(conv_layers) > 0:
         # Create a model that outputs feature maps
         layer_outputs = [layer.output for layer in conv_layers]
-        activation_model = keras.Model(inputs=model.input, outputs=layer_outputs)
+        activation_model = keras.Model(inputs=model.inputs, outputs=layer_outputs)
 
         # Pick a test image
         sample = X_test[0:1]  # Keep batch dimension
