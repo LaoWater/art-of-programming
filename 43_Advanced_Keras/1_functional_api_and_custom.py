@@ -9,6 +9,9 @@ Lesson: Beyond Sequential -- Multi-Input, Skip Connections, Custom Everything
 PREREQUISITES:
     - Sessions 41-42: Keras decoded, multiclass, regression, regularization,
       optimizers, callbacks, architecture design
+    - MAE=Average of ∣Actual Price−Predicted Price∣
+
+
 
 THE LEAP:
     Until now, every model was a straight stack: layer after layer after layer.
@@ -450,7 +453,7 @@ def custom_loss_and_metrics(X_train, y_train, X_val, y_val, X_test, y_test):
     print("  Best of both worlds: smooth gradient near zero, robust to outliers.")
     print()
 
-    # keras.saving not in this tensorflow version
+    # keras.saving not in this tensorflow version, using .utils
     @keras.utils.register_keras_serializable()
     def huber_loss(y_true, y_pred, delta=1.0):
         """Huber loss: quadratic for small errors, linear for large errors."""

@@ -6,6 +6,9 @@ UNDERSTANDING CONVOLUTION: The Foundation of Computer Vision
 Course: The Art of Programming - CNN & Transfer Learning (Session 37)
 Lesson: What Convolution Really Does (And Why Your Brain Already Knows It)
 
+CNNs didn’t invent vision.
+They copied biology.
+
 PREREQUISITES:
     - Completed Module 36 (neurons, backpropagation, TensorFlow/MNIST)
     - Understand: A neuron computes output = sigmoid(w*x + b)
