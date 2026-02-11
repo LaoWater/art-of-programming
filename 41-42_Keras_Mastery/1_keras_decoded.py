@@ -14,7 +14,7 @@ THE PROMISE:
     You've used model.compile(optimizer='adam', loss='sparse_categorical_crossentropy')
     But do you REALLY know what those words mean?
     Today we open the black box. Every term. Every choice. Every WHY.
-
+ 
 DATASET: Wine dataset (sklearn) - 178 samples, 13 chemical features, 3 classes
 
 ================================================================================
