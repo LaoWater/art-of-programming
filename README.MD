@@ -30,6 +30,7 @@
   <a href="#getting-started">Get Started</a> &nbsp;&bull;&nbsp;
   <a href="#learning-path">Learning Path</a> &nbsp;&bull;&nbsp;
   <a href="#for-students">Students</a> &nbsp;&bull;&nbsp;
+  <a href="#community-projects">Projects</a> &nbsp;&bull;&nbsp;
   <a href="#contributing">Contributing</a>
 </p>
 
@@ -346,6 +347,67 @@ All datasets are **built-in** — no downloads needed:
 | **Infrastructure** | Git, GCP *(deployment modules)* |
 
 </p>
+
+---
+
+## Community Projects
+
+What happens when course concepts meet real ambition. These are student-driven projects that grew beyond assignments into fully packaged, deployable products.
+
+---
+
+### DjBlue — Ambient Harmony
+
+> *Mood-aware AI companion for meetings, music, and mindful work.*
+
+A PySide6 desktop application that blends real-time meeting transcription, adaptive music playback, and the BlueBird AI chat assistant — all wrapped in a cross-platform package. Born from the intersection of deep learning, audio processing, and thoughtful UX design.
+
+<table>
+<tr>
+<td>
+
+**Presentation & Website**
+
+[![Repo](https://img.shields.io/badge/djblue--ambient--harmony-TypeScript-3178C6?style=flat-square&logo=github)](https://github.com/LaoWater/djblue-ambient-harmony)
+[![Last Commit](https://img.shields.io/github/last-commit/LaoWater/djblue-ambient-harmony?style=flat-square&label=updated)](https://github.com/LaoWater/djblue-ambient-harmony)
+
+Landing page & product showcase — *dj-blue.com (coming soon)*
+
+</td>
+<td>
+
+**Product & Packaging**
+
+[![Repo](https://img.shields.io/badge/dj--blue--ai-Python-3776AB?style=flat-square&logo=github)](https://github.com/RaresKeY/dj-blue-ai)
+[![Last Commit](https://img.shields.io/github/last-commit/RaresKeY/dj-blue-ai?style=flat-square&label=updated)](https://github.com/RaresKeY/dj-blue-ai)
+[![Forks](https://img.shields.io/github/forks/RaresKeY/dj-blue-ai?style=flat-square&label=forks)](https://github.com/RaresKeY/dj-blue-ai/network/members)
+
+Full desktop app — cross-platform build, meeting assist, transcript capture
+
+</td>
+</tr>
+</table>
+
+<details>
+<summary><strong>What's under the hood</strong></summary>
+
+&nbsp;
+
+| Layer | Tech |
+|:------|:-----|
+| Desktop UI | PySide6 (Qt for Python) |
+| AI / Chat | BlueBird AI assistant |
+| Audio | Real-time music playback, mood detection |
+| Transcription | Live meeting capture & processing |
+| Packaging | Cross-platform builds (Windows, macOS, Linux) |
+| Website | TypeScript, modern web stack |
+
+**Contributors:** [RaresKeY](https://github.com/RaresKeY) &nbsp;·&nbsp; [GigioneRadu](https://github.com/GigioneRadu) &nbsp;·&nbsp; [anitlo](https://github.com/anitlo) &nbsp;·&nbsp; [cosmin20089493](https://github.com/cosmin20089493)
+
+</details>
+
+> [!NOTE]
+> Have a project that grew out of this course? Open a PR or reach out — this section is for you.
 
 ---
 
