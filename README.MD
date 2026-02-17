@@ -371,7 +371,7 @@ A PySide6 desktop application that blends real-time meeting transcription, adapt
 [![Repo](https://img.shields.io/badge/djblue--ambient--harmony-TypeScript-3178C6?style=flat-square&logo=github)](https://github.com/LaoWater/djblue-ambient-harmony)
 [![Last Commit](https://img.shields.io/github/last-commit/LaoWater/djblue-ambient-harmony?style=flat-square&label=updated)](https://github.com/LaoWater/djblue-ambient-harmony)
 
-Landing page & product showcase — *dj-blue.com (coming soon)*
+Landing page & product showcase — [dj-blue.com](https://dj-blue.com)
 
 </td>
 <td>
