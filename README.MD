@@ -352,7 +352,44 @@ All datasets are **built-in** — no downloads needed:
 
 ## Community Projects
 
-What happens when course concepts meet real ambition. These are student-driven projects that grew beyond assignments into fully packaged, deployable products.
+What happens when course concepts meet real ambition. Projects that grew beyond assignments into fully packaged, deployable products — and the platform that ties it all together.
+
+---
+
+### Python Blueprint Bridge — The Course Platform
+
+> *Where the lessons actually live.*
+
+The full front-end platform powering this course — a web-based learning environment with an in-browser IDE, authentication, guided lessons anchored in real-world scenarios, group project spaces, and supplementary guides. Deployed on Google Cloud and built to make every module in this repo immediately accessible.
+
+[![Repo](https://img.shields.io/badge/python--blueprint--bridge-TypeScript-3178C6?style=flat-square&logo=github)](https://github.com/LaoWater/python-blueprint-bridge)
+[![Last Commit](https://img.shields.io/github/last-commit/LaoWater/python-blueprint-bridge?style=flat-square&label=updated)](https://github.com/LaoWater/python-blueprint-bridge)
+[![Live](https://img.shields.io/badge/live-blue--pigeon.appspot.com-4285F4?style=flat-square&logo=googlecloud&logoColor=white)](https://blue-pigeon-460611.nw.r.appspot.com/)
+
+<details>
+<summary><strong>Platform features</strong></summary>
+
+&nbsp;
+
+| Feature | Description |
+|:--------|:------------|
+| Web IDE | In-browser Python editor — no local setup needed |
+| Lesson Engine | Structured lessons tied to real-world applications |
+| Auth & Profiles | User accounts, progress tracking |
+| Group Projects | Collaborative spaces for team assignments |
+| Guides | Supplementary walkthroughs and references |
+| Deployment | Google Cloud App Engine (GCP) |
+
+| Layer | Tech |
+|:------|:-----|
+| Frontend | TypeScript, React |
+| Backend | Node.js, Supabase |
+| Database | PostgreSQL (via Supabase) |
+| Hosting | Google Cloud App Engine |
+
+**Contributors:** [LaoWater](https://github.com/LaoWater) &nbsp;·&nbsp; [RaresKeY](https://github.com/RaresKeY)
+
+</details>
 
 ---
 
