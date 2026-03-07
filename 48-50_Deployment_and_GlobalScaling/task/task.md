@@ -486,7 +486,7 @@ Raspunde la aceste intrebari in propriile cuvinte (3-5 propozitii fiecare):
    - Hint: Black Friday vs o zi normala
 
 4. **De ce NU ai nevoie de Kubernetes pentru proiectul tau acum?**
-   - Hint: cand ai 10 utilizatori, Docker e suficient
+   - Hint: cand ai <10000 utilizatori lunar, Docker e suficient
 
 **Partea 2: Minikube OPTIONAL (30 min)**
 
