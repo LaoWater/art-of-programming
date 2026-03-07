@@ -41,14 +41,16 @@ Studentii au parcurs un curs complet de **programare Python**, de la zero pana l
 
 Un exemplu concret de proiect realizat de studenti in cadrul cursului:
 
-**DJ Blue** — aplicatie Python care analizeaza streaming audio in timp real, integrand:
-- Analiza multi-modala audio
-- Modele Speech-to-Text (STT)
-- Asistent conversational
-- Packaged si released cross-platform (Windows, Linux, macOS)
+**DJ Blue** — aplicatie desktop Python (PySide6) care combina music playback cu asistenta AI:
+- **Interfata desktop completa** cu teme vizuale, carousel de cover-uri, timeline interactiv
+- **Asistent conversational AI** (integrat cu Gemini API) — chat contextual in aplicatie
+- **Transcriere audio in timp real** — captura si procesare de meeting-uri/audio
+- **Mood-aware playlists** — sugestii de muzica bazate pe detectia starii utilizatorului
+- **Stocare securizata** a credentialelor prin system keyring
+- **CI/CD automatizat** cu GitHub Actions — build-uri automate la fiecare release
+- **Distribuit cross-platform** (Windows, Linux, macOS) — executabile native si AppImage
 
-- Website: [dj-blue.com](https://dj-blue.com)
-- Cod sursa: [github.com/RaresKeY/dj-blue-ai](https://github.com/RaresKeY/dj-blue-ai)
+Website: [dj-blue.com](https://dj-blue.com) | Cod sursa: [github.com/RaresKeY/dj-blue-ai](https://github.com/RaresKeY/dj-blue-ai)
 
 ---
 
