@@ -2,7 +2,8 @@
 
 ## Ce au invatat
 
-Studentii au parcurs un curs complet de **programare Python**, de la zero pana la aplicatii practice cu date reale. Cursul a durat mai multe luni si a acoperit urmatoarele arii:
+Studentii au parcurs un curs complet de **programare Python**, de la zero pana la aplicatii practice cu date reale. 
+Cursul a acoperit urmatoarele arii:
 
 ### 1. Fundamente de Programare (Python)
 - Structuri de date (liste, dictionare, seturi)
