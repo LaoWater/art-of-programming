@@ -1,4 +1,4 @@
-# Profil Tehnic Studenti — Curs "Art of Programming"
+# Profil Tehnic Studenti — Curs Skillbrain
 
 ## Ce au invatat
 
