@@ -486,7 +486,7 @@ Raspunde la aceste intrebari in propriile cuvinte (3-5 propozitii fiecare):
    - Hint: Black Friday vs o zi normala
 
 4. **De ce NU ai nevoie de Kubernetes pentru proiectul tau acum?**
-   - Hint: cand ai 10 utilizatori, Docker e suficient
+   - Hint: cand ai <10000 utilizatori lunar, Docker e suficient
 
 **Partea 2: Minikube OPTIONAL (30 min)**
 
@@ -564,24 +564,6 @@ minikube delete
 - [ ] (OPTIONAL) Scaling testat (2 → 5 replici)
 
 ---
-
-### Ghid de notare / Grading Guide
-
-| Criteriu | Punctaj |
-|----------|---------|
-| Task 1 (Flask Image API) | 25 pct |
-| Task 2 (Dockerfile) | 20 pct |
-| Task 3 (Postman Testing) | 25 pct |
-| Task 4 (Docker Compose) | 30 pct |
-| Task 5 (Kubernetes - OPTIONAL) | +10 pct BONUS |
-
-**Sesiunile 48-50:** Tasks 1-4 obligatorii, Task 5 optional bonus.
-
-**Termen de predare:** la finalul sesiunii 50 sau la inceputul urmatoarei.
-
-**Nota:** Aceste task-uri construiesc unul pe altul.
-Task 1 → Task 2 (containerizeaza ce ai facut) → Task 3 (testeaza
-cu Postman) → Task 4 (adauga logging). Lucreaza in ordine!
 
 **Resurse utile:**
 - Docker Desktop: https://www.docker.com/products/docker-desktop/
