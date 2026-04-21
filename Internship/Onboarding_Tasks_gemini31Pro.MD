@@ -29,7 +29,7 @@ Before building the foundation, ensure you are comfortable with:
 - **Databases:** Simple database concepts using local files (`.md`/`.txt`) and SQLite.
 
 #### Laying the Foundation
-Now let's lay the foundation—the simple system from where the complex one will grow.
+Now let's lay the foundation. The simple system from where the complex one will grow.
 
 **Task Description:**
 Put it all together into a Python application:
@@ -45,12 +45,12 @@ Put it all together into a Python application:
 - [ ] SQLite database exists with basic restaurant inventory data.
 - [ ] Interactive loop/menu allows the user to query the database or chat with the AI.
 
-#### Advanced Challenge - AI-Assisted Retail Shop
+#### Advanced Challenge: AI-Assisted Retail Shop
 **Goal:** Find a way to let the LLM know about your database so it can perform database operations (SELECT, UPDATE, DELETE) autonomously based on natural language.
 
 **Advanced Acceptance Criteria:**
 - The LLM can interpret a prompt and act as an AI-Assisted Retail shop.
-- **Example User Prompt:** _“We sold 100 electronics today - 15 TVs, 50 fridges, 35 washing machines - and we sold-out ALL microwaves. Update stock, give me monthly $ statistics - and plan the next bulk-buy electronics from our Samsung partner.”_
+- **Example User Prompt:** _“We sold 100 electronics today - 15 TVs, 50 fridges, 35 washing machines - and we sold-out ALL microwaves. Update stock, give me monthly $ statistics, and plan the next bulk-buy electronics from our Samsung partner.”_
 - **Notice:** Observe how the user request (Specifications) paints the complexity and connections in the database you create (Data Modelling). This is exactly similar to our OOP Homework: [OOP Special Task](../06_oop/Special_Task/oop_homework_english.md)
 
 ---
@@ -77,15 +77,32 @@ Study the repository and prepare a presentation covering:
 There are 2 skills in the Art of Programming which can change the whole Experience & Performance of the Student:
 
 ### I. Humbleness and Respect for the Craft
-Find the humbleness so that you go exactly to your current level to learn. If virtual environments and Python are foggy—that is your place for a while. If Git and getting the repo synced and branched locally is challenging—that is exactly where you need to be and nowhere else higher in the technical hierarchy, for anything higher will be built on unstable grounds. 
-> _“Learn to Regress, Deserve to progress.”_ – a concept which lays also the foundation for biomechanics Recovery & Performance.
+
+Find the humbleness so that you go **exactly to your current level to learn**. 
+
+If virtual environments and Python are foggy, that is your place for a while. 
+
+If Git and getting the repo synced and branched locally is challenging, that is exactly where you need to be and nowhere else higher in the technical hierarchy. Anything higher will be built on unstable grounds.
+
+> _“Learn to Regress, Deserve to progress.”_ 
+> 
+> A concept which lays also the foundation for biomechanics Recovery & Performance.
 
 ### II. Sincere Dedication and Effort
-Engage in doing with sincere dedication and effort. Find your available time, find your place of study, create a comfortable environment so that it is a true pleasure to sit at the computer. Make sure the desk, mouse, and keyboard are clean, have water by your side, and prepare your whole working station as you would prepare it for a loving guest.
 
-Find your way of working: your preferred IDE, your hotkeys and shortcuts around the PC, your saved notes and technical blueprints, bookmarks, arranged code directories, images, folders, and files. Set it up so that if you need anything, you know exactly where to look and how to get there—as would any skilled Carpenter or Engineer.
+Engage in doing with sincere **dedication** and **effort**. 
 
-In a world which is in a continuous rush and the Mind is pre-set by Evolution towards optimal energy conservation (similar to an artificial neural network which remains stuck on a local maximum)—and thus seeking to perform tasks fast and successfully—both these skills are often ‘hidden’. Sure, the student may be progressing, but without these, they remain far from their true Potential.
+Find your available time, find your place of study, create a comfortable environment so that it is a true pleasure to sit at the computer. 
+
+Make sure the desk, mouse, and keyboard are clean. Have water by your side, and prepare your whole working station as you would prepare it for a _loving guest_.
+
+Find your way of working: your preferred IDE, your hotkeys and shortcuts around the PC, your saved notes and technical blueprints, bookmarks, arranged code directories, images, folders, and files. 
+
+Set it up so that if you need anything, you know exactly where to look and how to get there, as would any skilled Carpenter or Engineer.
+
+In a world which is in a continuous rush and the Mind is pre-set by Evolution towards **optimal energy conservation** (similar to an artificial neural network which remains stuck on a *local maximum*), and thus seeking to perform tasks fast and successfully, both these skills are often ‘hidden’. 
+
+Sure, the student may be progressing, but without these, they remain far from their true **Potential**.
 
 ---
 
@@ -103,7 +120,7 @@ In a world which is in a continuous rush and the Mind is pre-set by Evolution to
 
 ### 🌌 Exploring the Vector Space
 
-The repository you are stepping into is more than just code—it's a journey from the very first `print()` statement to production-grade Deep Learning. 
+The repository you are stepping into is more than just code. It is a journey from the very first `print()` statement to production-grade Deep Learning. 
 
 | Phase | Journey | What to Expect |
 |:------|:--------|:---------------|
