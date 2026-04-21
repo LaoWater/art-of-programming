@@ -77,15 +77,32 @@ Study the repository and prepare a presentation covering:
 There are 2 skills in the Art of Programming which can change the whole Experience & Performance of the Student:
 
 ### I. Humbleness and Respect for the Craft
-Find the humbleness so that you go exactly to your current level to learn. If virtual environments and Python are foggy—that is your place for a while. If Git and getting the repo synced and branched locally is challenging—that is exactly where you need to be and nowhere else higher in the technical hierarchy, for anything higher will be built on unstable grounds. 
-> _“Learn to Regress, Deserve to progress.”_ – a concept which lays also the foundation for biomechanics Recovery & Performance.
+
+Find the humbleness so that you go **exactly to your current level to learn**. 
+
+If virtual environments and Python are foggy, that is your place for a while. 
+
+If Git and getting the repo synced and branched locally is challenging, that is exactly where you need to be and nowhere else higher in the technical hierarchy. Anything higher will be built on unstable grounds.
+
+> _“Learn to Regress, Deserve to progress.”_ 
+> 
+> A concept which lays also the foundation for biomechanics Recovery & Performance.
 
 ### II. Sincere Dedication and Effort
-Engage in doing with sincere dedication and effort. Find your available time, find your place of study, create a comfortable environment so that it is a true pleasure to sit at the computer. Make sure the desk, mouse, and keyboard are clean, have water by your side, and prepare your whole working station as you would prepare it for a loving guest.
 
-Find your way of working: your preferred IDE, your hotkeys and shortcuts around the PC, your saved notes and technical blueprints, bookmarks, arranged code directories, images, folders, and files. Set it up so that if you need anything, you know exactly where to look and how to get there—as would any skilled Carpenter or Engineer.
+Engage in doing with sincere **dedication** and **effort**. 
 
-In a world which is in a continuous rush and the Mind is pre-set by Evolution towards optimal energy conservation (similar to an artificial neural network which remains stuck on a local maximum)—and thus seeking to perform tasks fast and successfully—both these skills are often ‘hidden’. Sure, the student may be progressing, but without these, they remain far from their true Potential.
+Find your available time, find your place of study, create a comfortable environment so that it is a true pleasure to sit at the computer. 
+
+Make sure the desk, mouse, and keyboard are clean. Have water by your side, and prepare your whole working station as you would prepare it for a _loving guest_.
+
+Find your way of working: your preferred IDE, your hotkeys and shortcuts around the PC, your saved notes and technical blueprints, bookmarks, arranged code directories, images, folders, and files. 
+
+Set it up so that if you need anything, you know exactly where to look and how to get there, as would any skilled Carpenter or Engineer.
+
+In a world which is in a continuous rush and the Mind is pre-set by Evolution towards **optimal energy conservation** (similar to an artificial neural network which remains stuck on a *local maximum*), and thus seeking to perform tasks fast and successfully, both these skills are often ‘hidden’. 
+
+Sure, the student may be progressing, but without these, they remain far from their true **Potential**.
 
 ---
 
